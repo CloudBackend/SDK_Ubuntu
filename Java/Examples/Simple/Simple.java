@@ -281,9 +281,9 @@ public class Simple {
     return;
   }
 
-  public AbstractMap<Long,com.std.PermissionAclScopeEnum> getContainerACL(com.cbe.Container container) {
+  public com.std.Acl_Map getContainerACL(com.cbe.Container container) {
     MyAclDelegate delegate = new MyAclDelegate();
-    AbstractMap<Long, com.std.PermissionAclScopeEnum> myMap = null;
+    com.std.Acl_Map myMap = null;
     try
     {
       container.getAcl(delegate);
@@ -372,7 +372,8 @@ public class Simple {
     Simple inst = new Simple();
     com.cbe.CloudBackend cbobj = inst.myLogin("gh1");
     if (cbobj.account().userId()>0) {
-      System.out.println("Authenticated as: " + cbobj.account().username() + "\t" + cbobj.account().firstName() + " " + cbobj.account().lastName());
+      System.out.println("Authenticated as: " + cbobj.account().username() + "\t(" + cbobj.account().userId() + ")");
+      System.out.println("Name:\t" + cbobj.account().firstName() + " " + cbobj.account().lastName());
       System.out.println("Version: " + cbobj.version());
     } else {
       System.out.println("Login failed.");
@@ -385,10 +386,12 @@ public class Simple {
     String file2 = "";
     try
     {
+      boolean reuseContainer = false;
       List<Item> items;
-      String containerName = "zSimple";
+      String containerName = "z-Simple";
       System.out.println(programName + "::getContainers");   
-      QueryResult qR = inst.getContainers(cbobj.account().rootContainer());
+      com.cbe.Container testContainer = null;
+      com.cbe.QueryResult qR = inst.getContainers(cbobj.account().rootContainer());
       items = qR.getItemsSnapshot();
       if(qR == null) {
         System.out.println("Query got null. ");
@@ -398,23 +401,41 @@ public class Simple {
         System.out.println("Content of: /");
         for(Item item : items) {
           if (item.type() == com.cbe.ItemType.Container) {
-            System.out.println(" <CNT>  " + item.name() + "/");
+            System.out.println(" <CNT>\t" + item.name() + "/");
+            if (item.name().equals(containerName)) {
+              reuseContainer = true;
+              testContainer=com.cbe.CloudBackend.castContainer(item);
+            }
           } else {
             System.out.println("\t" + item.name());
           }
         }
       }
   
-      Container testContainer = inst.createContainer(cbobj.account().rootContainer(), containerName);
+      if (!reuseContainer) {
+        testContainer = inst.createContainer(cbobj.account().rootContainer(), containerName);
+      }
       if (testContainer == null) {
         System.out.println("Failed creating container /" + containerName);
         cbobj.terminate();
         System.out.println(programName + " program stops.");
         return;
       } else {
-        System.out.println("Container created: " + testContainer.name() + " (" + testContainer.id() + ")");
+        System.out.println("Container: " + testContainer.name() + " (" + testContainer.id() + ")");
       }
-  
+      com.std.Acl_Map aclMap = inst.getContainerACL(testContainer);
+      com.std.PermissionAclScopeEnum value = new com.std.PermissionAclScopeEnum();
+      value=new com.std.PermissionAclScopeEnum(com.cbe.Permissions.ReadWrite, com.cbe.AclScope.User);
+      aclMap.put(12886594355L, value);
+      value=new com.std.PermissionAclScopeEnum(com.cbe.Permissions.Read, com.cbe.AclScope.Group);
+      aclMap.put(17186620900L, value);
+      inst.setContainerACL(testContainer, aclMap);
+      System.out.println(" set ACL map to");
+      aclMap = inst.getContainerACL(testContainer);
+      for (var entry : aclMap.entrySet()) {
+        value = entry.getValue();
+        System.out.println("  " + value.getSecond() + "\tid: " + entry.getKey() + " : " + value.getFirst());
+      }
       System.out.println(programName + "::uploadObject");   
       com.cbe.Object object = inst.uploadObject(testContainer);
       if (!object.idLoaded()) {
@@ -428,14 +449,17 @@ public class Simple {
       com.cbe.Object binaryObject = null;
       binaryObject = inst.uploadBinary(testContainer);
   
-      Container subContainer = inst.createContainer(testContainer, "my-sub");
-      if (testContainer == null) {
-        System.out.println("Failed creating sub-container in /" + testContainer.name() + "/");
-        cbobj.terminate();
-        System.out.println(programName + " program stops.");
-        return;
-      } else {
-        System.out.println("Container created: " + subContainer.name() + " (" + subContainer.id() + ")");
+      com.cbe.Container subContainer = null;
+      if (!reuseContainer) {
+        subContainer = inst.createContainer(testContainer, "my-sub");
+        if (subContainer == null) {
+          System.out.println("Failed creating sub-container in /" + testContainer.name() + "/");
+          cbobj.terminate();
+          System.out.println(programName + " program stops.");
+          return;
+        } else {
+          System.out.println("Container created: " + subContainer.name() + " (" + subContainer.id() + ")");
+        }
       }
   
       qR = inst.getItems(testContainer);

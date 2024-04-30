@@ -31,9 +31,12 @@ fi
 mv ${mydir} ~/cbe/${RELEASE}
 touch ~/cbe/${RELEASE}
 cd ~/cbe
-ls -l current
-rm -i current                               # remove old symbolic link
-ln -s ${RELEASE} current                    # create symbolic link to the current version of the SDK
+if [ -L ~/cbe/current ];
+then
+  echo "symbolic link in " `pwd`
+  rm ~/cbe/current                       # remove old symbolic link
+fi
+ln -s ${RELEASE} current                 # create symbolic link to the current version of the SDK
 cd
 ls -l cbe/current
 echo "done."

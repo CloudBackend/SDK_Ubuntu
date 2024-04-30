@@ -10,4 +10,4 @@ To test the installation:
 - Run it : `bash run.sh`
 
 ----
-#### Copyright © CloudBackend AB 2022.
+#### Copyright © CloudBackend AB 2022-2024.
