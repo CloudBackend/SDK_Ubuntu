@@ -347,10 +347,10 @@ public class Simple {
     };
   }
 
-  public static void execThis(String myCommand) {
+  public static void execThis(String[] commands) {
     try
     {
-      Process process = Runtime.getRuntime().exec(myCommand);
+      Process process = Runtime.getRuntime().exec(commands, null);
       BufferedReader reader = new BufferedReader(
                               new InputStreamReader(process.getInputStream()));
       String aline;
@@ -495,14 +495,14 @@ public class Simple {
         System.out.println("Binary Object download failed!");
         return;
       }
+
+      String[] command1 = new String[] { "bash", "-c", "ls -l " + file1 + " " + file2 };
+      System.out.println("Downloaded");
+      System.out.println("----------");
+      execThis(command1);
   
       System.out.println("Remove container /" + testContainer.name() + "/");
       inst.removeContainer(testContainer);
-
-      String command = "ls -l " + file1 + " " + file2;
-      System.out.println("Downloaded");
-      System.out.println("----------");
-      execThis(command);
     }
     catch (IOException e) {
       System.out.println("Caught i/o error:");

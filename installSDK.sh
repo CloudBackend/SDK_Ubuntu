@@ -26,14 +26,14 @@ then
   ls -ld ~/cbe/${RELEASE} ;
   echo "renaming" ~/cbe/${RELEASE} "to" ~/cbe/removed_${RELEASE}_`date --iso`;
   mv ~/cbe/${RELEASE} ~/cbe/removed_${RELEASE}_`date +%FT%H%M`;
-  ls -ld ~/cbe/2* ~/cbe/removed_*
 fi
 mv ${mydir} ~/cbe/${RELEASE}
 touch ~/cbe/${RELEASE}
+ls -ld ~/cbe/2* ~/cbe/removed_*
 cd ~/cbe
 if [ -L ~/cbe/current ];
 then
-  echo "symbolic link in " `pwd`
+  echo "renew symbolic link in " `pwd`
   rm ~/cbe/current                       # remove old symbolic link
 fi
 ln -s ${RELEASE} current                 # create symbolic link to the current version of the SDK
