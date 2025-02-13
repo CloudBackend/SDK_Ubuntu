@@ -13,12 +13,12 @@ else
     exercise="1"
 fi
 ARCH=`uname -m`
-echo "computer architechture ${ARCH}"
+echo "computer architecture ${ARCH}"
 case "$ARCH" in
     "x86_64")
     COMPILER_COMMAND="g++ -std=c++11 -pthread "
-    # libCBE="../../lib/Linux_x86/libcb_sdk.so"
-    libCBE="../../lib/Linux_x86/libcb_sdk.a"
+    # libCBE=${HOME}"/cbe/current/C++/lib/Linux_x86/libcb_sdk.so"
+    libCBE=${HOME}"/cbe/current/C++/lib/Linux_x86/libcb_sdk.a"
     CODE_PATH="./"
     ;;
 
