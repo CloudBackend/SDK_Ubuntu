@@ -1,6 +1,10 @@
-![version](https://badgen.net/badge/version/2.1.3/green)
+![version](https://badgen.net/badge/version/2.1.4/green)
 ![platform](https://badgen.net/badge/platform/ubuntu)
 ![languages](https://badgen.net/badge/language/C++,Java,Android/purple?list=|)
+
+# CloudBackendSDK 2.1.4
+Update with support for Linux x86_64 on Ubuntu 22.04 LTS and Ubuntu 24.04 LTS.
+Earlier versions are no longer supported.
 
 # CloudBackendSDK 2.1.3
 This repository contains the CloudBackend SDK, a build for Linux x86_64 Ubuntu 22 LTS.
@@ -44,7 +48,7 @@ Notes: Recommended platform for this SDK is Linux x86_64 Ubuntu 22 LTS,
 
 # Installation
 
-### x86_64 Ubuntu 20.04 LTS & 22.04 LTS
+### x86_64 Ubuntu 22.04 LTS & 24.04 LTS
 
 Click on
 Code : Download ZIP
@@ -53,8 +57,8 @@ then do:
 ```
 cd
 cd Downloads                                # or where you downloaded the package
-unzip CloudBackendSDK-2.1.3.zip             # or the zip file name
-cd CloudBackendSDK-2.1.3
+unzip CloudBackendSDK-2.1.4.zip             # or the zip file name
+cd CloudBackendSDK-2.1.4
 bash installSDK.sh
 ```
 
@@ -73,5 +77,5 @@ Previous script calls
 - See each language folder
 ----
 
-#### Copyright © CloudBackend AB 2020-2024.
+#### Copyright © CloudBackend AB 2020-2025.
 
