@@ -61,7 +61,7 @@ int main(int argc, const char** argv) {
   const std::string qualFile1Name = std::string{uploadPath} + 
                                                 myObjectFileName;
   cbe::Object anObject{cbe::DefaultCtor{}};
-  cbe::Object object{cbe::DefaultCtor{}};
+  cbe::Object myObject{cbe::DefaultCtor{}};
   cbe::Object::Streams streams;
   std::cout << "Create local file " << qualFile1Name << std::endl;
   std::ofstream ofs{qualFile1Name};
@@ -75,8 +75,8 @@ int main(int argc, const char** argv) {
   std::cout << "Uploading object from "
             << qualFile1Name
             << std::endl;
-    object = myContainer.upload(qualFile1Name);
-    streams = object.getStreams();
+    myObject = myContainer.upload(qualFile1Name);
+    streams = myObject.getStreams();
   }
   // Using generic Exception for convenience
   catch (const cbe::util::Exception& e)
@@ -109,14 +109,14 @@ int main(int argc, const char** argv) {
                               })->streamId + 1;
   try
   {
-    object.uploadStream(qualFile2Name, nextStreamId);
+    myObject.uploadStream(qualFile2Name, nextStreamId);
     std::cout << "home://"
               << myContainer.name() 
               << "/"
-              << object.name() 
+              << myObject.name() 
               << " now has two streams."
               << std::endl;
-    streams = object.getStreams();
+    streams = myObject.getStreams();
   }
   catch (const cbe::util::Exception& e)
   {
@@ -136,9 +136,9 @@ int main(int argc, const char** argv) {
     std::cout << stream.streamId
               << " to: "
               << path
-              << object.name()
+              << myObject.name()
               << std::endl;
-      auto result = object.downloadStream(path, stream);
+      auto result = myObject.downloadStream(path, stream);
     }
     catch (const cbe::util::Exception& e)
     {
