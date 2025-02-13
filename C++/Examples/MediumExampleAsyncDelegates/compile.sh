@@ -13,8 +13,8 @@ arch=`uname -m`
 case "$arch" in
     "x86_64")
     compiler_command="g++ -std=c++11 -pthread "
-    #libcbe="../../lib/linux_x86/libcb_sdk.so"
-    libcbe="../../lib/Linux_x86/libcb_sdk.a"
+    # libCBE=${HOME}"/cbe/current/C++/lib/Linux_x86/libcb_sdk.so"
+    libCBE=${HOME}"/cbe/current/C++/lib/Linux_x86/libcb_sdk.a"
     code_path="./"
     ;;
 
