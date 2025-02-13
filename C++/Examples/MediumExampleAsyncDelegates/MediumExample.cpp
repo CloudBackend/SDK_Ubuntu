@@ -74,7 +74,7 @@ int main(int argc, const char** argv) {
   const std::string           qualFile1Name = std::string{uploadPath} +
                                                           myObjectFileName;
   cbe::Object anObject{cbe::DefaultCtor{}};
-  cbe::Object object{cbe::DefaultCtor{}};
+  cbe::Object myObject{cbe::DefaultCtor{}};
   cbe::Object::Streams streams;
   std::cout << "Create local file " << qualFile1Name << std::endl;
   std::ofstream ofs{qualFile1Name};
@@ -89,14 +89,14 @@ int main(int argc, const char** argv) {
   std::shared_ptr<MyUploadDelegate> myUploadDelegate =
                                            std::make_shared<MyUploadDelegate>();
   myContainer.upload(qualFile1Name, myUploadDelegate);
-  object = myUploadDelegate->waitForRsp();
+  myObject = myUploadDelegate->waitForRsp();
 
-  if (!object) {
+  if (!myObject) {
     std::cout << "Error! " << myUploadDelegate->errorInfo << std::endl;
   }
   std::shared_ptr<MyGetStreamsDelegate> getStreamsDelegate =
                                        std::make_shared<MyGetStreamsDelegate>();
-  object.getStreams(getStreamsDelegate);
+  myObject.getStreams(getStreamsDelegate);
   getStreamsDelegate->waitForRsp();
   if (getStreamsDelegate->errorInfo) {
     std::cout << "Error! " << myLogInDelegate->errorInfo << std::endl;
@@ -126,7 +126,7 @@ int main(int argc, const char** argv) {
 
   std::shared_ptr<MyUploadStreamDelegate> myUploadStreamDelegate =
                                   std::make_shared<MyUploadStreamDelegate>();
-  object.uploadStream(qualFile2Name, nextStreamId, myUploadStreamDelegate);
+  myObject.uploadStream(qualFile2Name, nextStreamId, myUploadStreamDelegate);
   myUploadStreamDelegate->waitForRsp();
   if (myUploadStreamDelegate->errorInfo) {
     std::cout << "Error! " << myLogInDelegate->errorInfo << std::endl;
@@ -134,10 +134,10 @@ int main(int argc, const char** argv) {
   std::cout << "home://"
             << myContainer.name() 
             << "/"
-            << object.name() 
+            << myObject.name() 
             << " now has two streams."
             << std::endl;
-  object.getStreams(getStreamsDelegate);
+  myObject.getStreams(getStreamsDelegate);
   getStreamsDelegate->waitForRsp();
   if (getStreamsDelegate->errorInfo) {
     std::cout << "Error! " << myLogInDelegate->errorInfo << std::endl;
@@ -155,9 +155,9 @@ int main(int argc, const char** argv) {
     std::cout << stream.streamId
               << " to: "
               << path
-              << object.name()
+              << myObject.name()
               << std::endl;
-    object.downloadStream(path, stream, myDownloadDelegate);
+    myObject.downloadStream(path, stream, myDownloadDelegate);
     myDownloadDelegate->waitForRsp();
     if (!myDownloadDelegate) {
       std::cout << "Error! " << myDownloadDelegate->errorInfo << std::endl;
