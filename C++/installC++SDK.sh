@@ -27,7 +27,6 @@ then
         rm libcb_sdkso.zip
     fi
 fi
-pwd
 ls -lh lib*
 echo
 cd -
