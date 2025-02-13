@@ -949,7 +949,7 @@ public:
    * Search handles tags in combination of conjunctions of keys and/or key 
    * values separated by |. \n 
    * E.g. Name:*|Country:Sweden|Country:Norway, this would search for objects 
-   * with key Name but any value and where key Country is either Sweden or 
+   * with key Name of any value and where key Country is either Sweden or 
    * Norway.
    * @param tags is a string of key tags or key:value pairs 
    *             that are separated by |.
@@ -1014,14 +1014,14 @@ public:
   /**
    * @brief Search using filter.
    * 
-   * Search the whole container for tags related to Objects in the container 
-   * structure. \n 
+   * Search the whole container with sub-containers related to Objects
+   * in the container hierarchy structure. \n 
    * E.g. Key = Name, Value Contract/Object/Song => Name:Contract1.
    *
    * Search handles tags in combination / conjunction of keys and/or key values 
    * separated by |. \n 
    * E.g. Name:*|Country:Sweden|Country:Norway, this would search for objects 
-   * with key Name but any value and where key Country is either Sweden or 
+   * with key Name of any value and where key Country is either Sweden or 
    * Norway.
    * @param filter is a cbe::Filter on which you can set 
    * how you want data to be ordered when searching. \n 

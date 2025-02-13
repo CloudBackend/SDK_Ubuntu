@@ -36,7 +36,10 @@ public:
    */
   std::string getDescription() const;
   /**
-   * Gets the password
+   * Checks if a password has been set.
+   * 
+   * @returns "true" : if a password has been set
+   * @returns "" : empty string if not.
    */
   std::string getPassword() const;
   /**

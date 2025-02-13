@@ -160,7 +160,6 @@ public:
                                  const std::string& tenant,
                                  const std::string& client,
                                  LogInError&        error);
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #endif // #ifndef CBE_NO_SYNC
 
   /**
@@ -570,7 +569,7 @@ public:
    * Search handles tags in combination / conjunction of keys and/or key values
    * separated by |.<br>
    * E.g., Name:*|Country:Sweden|Country:Norway. <br>
-   * This would search for objects with key Name but any value and where key
+   * This would search for objects with key Name of any value and where key
    * Country is either Sweden or Norway.
    * @param tags          Is a string of key tags or key:value pairs that are
    *                      separated by |.
@@ -650,21 +649,22 @@ public:
   /**
    * @brief Select Object's with specified key/values using filter.
    * 
-   * Search the whole container for tags related to Objects in the container 
-   * structure. \n 
+   * Search the whole container with sub-containers related to Objects
+   * in the container hierarchy structure. \n 
    * E.g., <c>Key = Name, Value Contract/Object/Song => Name:Contract1 </c>.
    *
    * Search handles tags in combination / conjunction of keys and/or key values
    * separated by |. \n 
    * E.g., Name:*|Country:Sweden|Country:Norway, this would search for objects
-   * with key Name but any value and where key Country is either Sweden or 
+   * with key Name of any value and where key Country is either Sweden or 
    * Norway.
    * 
    * See Filter.
    * @param filter is a cbe::Filter on which you can set how you want data to be 
-   * ordered when searching. Remember to set the queryString to be keys/tags or 
+   * ordered when searching. \n
+   * Remember to set the queryString to be keys/tags or 
    * key:value pairs that are separated by |.
-   * @param containerId is the ContainerId of the rootContainer to start the 
+   * @param containerId is the ContainerId of the Container to start the 
    * search of Objects in. \n 
    * E.g., if starting in the rootContainer, the whole 
    * account will be searched for matching tags, key/value's.

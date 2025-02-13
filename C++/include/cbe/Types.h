@@ -1,16 +1,16 @@
 /*
   SDK type definitions.
-  Copyright © CloudBackend AB 2020 - 2023.
+  Copyright © CloudBackend AB 2020 - 2025.
 */
 #ifndef INCLUDE_CBE_TYPES_H_
 #define INCLUDE_CBE_TYPES_H_
 
-#include <stdint.h>
-#include <vector>
+#include <cstdint>
 #include <map>
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 /**
  * @brief Root namespace for the %CloudBackend SDK API.
@@ -90,6 +90,10 @@ namespace cbe {
    * @brief Represents the cbe::Group membership id. 
    */
   using MemberId    = std::uint64_t;
+  /**
+   * @brief Unique Id for added Listener.
+   */
+  using ListenerHandle = std::uint64_t;
   /**
    * @brief Unique Id of a cbe::Object
    */ 
@@ -442,6 +446,5 @@ namespace cbe {
   namespace util {}
 
 }// namespace cbe
-
 
 #endif // INCLUDE_CBE_TYPES_H_

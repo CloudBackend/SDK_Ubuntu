@@ -1,5 +1,5 @@
 /*
-     Copyright © CloudBackend AB 2022-2023.
+     Copyright © CloudBackend AB 2022-2025.
 */
 
 #ifndef INCLUDE_CBE_PUBLISH_H_
@@ -72,7 +72,10 @@ public:
    */
   cbe::PublishVisibility getPrivacy() const;
   /**
-   * Gets the password if applicable
+   * Checks if a password has been set.
+   * 
+   * @returns "true" : if a password has been set
+   * @returns "" : empty string if not.
    */
   std::string getPassword() const;
   /**
