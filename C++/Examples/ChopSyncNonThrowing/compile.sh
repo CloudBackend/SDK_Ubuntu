@@ -17,8 +17,8 @@ echo "computer architechture ${ARCH}"
 case "$ARCH" in
     "x86_64")
     COMPILER_COMMAND="g++ -std=c++17 -pthread "
-    #libCBE="../../lib/Linux_x86/libcb_sdk.so"
-    libCBE="../../lib/Linux_x86/libcb_sdk.a"
+    # libCBE=${HOME}"/cbe/current/C++/lib/Linux_x86/libcb_sdk.so"
+    libCBE=${HOME}"/cbe/current/C++/lib/Linux_x86/libcb_sdk.a"
     CODE_PATH="./"
     echo $CODE_PATH
     ;;
