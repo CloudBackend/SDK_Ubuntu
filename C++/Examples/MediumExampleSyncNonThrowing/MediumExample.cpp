@@ -65,13 +65,13 @@ int main(int argc, const char** argv) {
       return 3;
     }
   }
-// - - - - - - - - - - - - - - - upload_syncExcept - - - - - - - - - - - - - - -
+// - - - - - - - - - - - - upload_syncNonThrowing - - - - - - - - - - - - - - -
   constexpr const char* const uploadPath = "/tmp/";
   constexpr const char* const myObjectFileName = "Medium_C_a_message";
   const std::string           qualFile1Name = std::string{uploadPath} + 
                                                           myObjectFileName;
   cbe::Object anObject{cbe::DefaultCtor{}};
-  cbe::Object object{cbe::DefaultCtor{}};
+  cbe::Object myObject{cbe::DefaultCtor{}};
   cbe::Object::Streams streams;
   std::cout << "Create local file " << qualFile1Name << std::endl;
   std::ofstream ofs{qualFile1Name};
@@ -84,14 +84,14 @@ int main(int argc, const char** argv) {
   std::cout << "Uploading object from "
             << qualFile1Name
             << std::endl;
-  object = *myContainer.upload(qualFile1Name, uploadError);
+  myObject = *myContainer.upload(qualFile1Name, uploadError);
   if (uploadError) {
     std::cout << "Error! " << uploadError << std::endl;
     cloudBackend.terminate();
     return 4;
   }
-  streams = object.getStreams();
-  // - - - - - - - - - - - - - - - uploadStream_syncExcept - - - - - - - - - - -
+  streams = myObject.getStreams();
+  // - - - -  - - - - - - - - uploadStream_syncNonThrowing - - - - - - - - - - -
   constexpr const char* const myFile2Name = "Medium_C_an_attachment";
   const std::string qualFile2Name = std::string{uploadPath} + myFile2Name;
   std::ofstream ofs3{qualFile2Name};
@@ -111,7 +111,7 @@ int main(int argc, const char** argv) {
                                  return stream1.streamId < stream2.streamId;
                               })->streamId + 1;
   cbe::Object::UploadError uploadStreamError;
-  object.uploadStream(qualFile2Name, nextStreamId, uploadStreamError);
+  myObject.uploadStream(qualFile2Name, nextStreamId, uploadStreamError);
   if (uploadStreamError) {
     std::cout << "Error! " << uploadStreamError << std::endl;
     cloudBackend.terminate();
@@ -120,11 +120,11 @@ int main(int argc, const char** argv) {
     std::cout << "home://"
               << myContainer.name() 
               << "/"
-              << object.name() 
+              << myObject.name() 
               << " now has two streams."
               << std::endl;
-  streams = object.getStreams();
-  // - - - - - - - - - - - - - - downloadStream_syncExcept - - - - - - - - - - -
+  streams = myObject.getStreams();
+  // - - - - - - - - - - - downloadStream_syncNonThrowing - - - - - - - - - - -
   constexpr const char* const downloadPath = "/tmp/Medium_C_download_stream_";
   for (const auto& stream : streams) {
     const auto path = std::string{downloadPath} + 
@@ -133,16 +133,16 @@ int main(int argc, const char** argv) {
     std::cout << stream.streamId
               << " to: "
               << path
-              << object.name()
+              << myObject.name()
               << std::endl;
-    auto result = *object.downloadStream(path, stream, downloadStreamError);
+    auto result = *myObject.downloadStream(path, stream, downloadStreamError);
     if (downloadStreamError) {
       std::cout << "Error! " << downloadStreamError << std::endl;
       cloudBackend.terminate();
       return 6;
     }
   }
-// - - - - - - - - - - - cloudbackend_query_syncExcept - - - - - - - - - - - - -
+// - - - - - - - - cloudbackend_query_syncNonThrowing - - - - - - - - - - - - -
   std::cout << "Content of "
             << myContainer.name()
             << std::endl;
